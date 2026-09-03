@@ -1,0 +1,23 @@
+Window.SetBackgroundTopColor(0.0, 0.0, 0.0);
+Window.SetBackgroundBottomColor(0.0, 0.0, 0.0);
+
+mark.image = Image.Text("◆", 1.0, 0.14, 0.04);
+mark.sprite = Sprite(mark.image);
+mark.sprite.SetPosition(Window.GetWidth() / 2 - mark.image.GetWidth() / 2,
+                        Window.GetHeight() / 2 - mark.image.GetHeight() - 28,
+                        100);
+
+wordmark.image = Image.Text("HongXingOS", 1.0, 1.0, 1.0);
+wordmark.sprite = Sprite(wordmark.image);
+wordmark.sprite.SetPosition(Window.GetWidth() / 2 - wordmark.image.GetWidth() / 2,
+                            Window.GetHeight() / 2 + 8,
+                            100);
+wordmark.sprite.SetOpacity(0.72);
+
+fun progress_callback(duration, progress)
+{
+    wordmark.sprite.SetOpacity(0.72 + progress * 0.28);
+    mark.sprite.SetOpacity(0.80 + progress * 0.20);
+}
+
+Plymouth.SetBootProgressFunction(progress_callback);
