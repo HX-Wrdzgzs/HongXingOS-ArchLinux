@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=HongXingOS Wallpaper Setup
+Exec=/usr/local/bin/hongxingos-set-wallpaper
+OnlyShowIn=KDE;
+X-KDE-autostart-after=panel
+NoDisplay=true
