@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#ffffff"/>
+  <g fill="none" stroke="#ececec" stroke-width="2" opacity="0.9">
+    <path d="M0 880 H220 L300 800 H520"/>
+    <path d="M1390 0 L1250 140 H1450 L1580 10"/>
+    <path d="M1490 1080 L1640 930 H1920"/>
+  </g>
+  <g fill="none" stroke="#ff3a20" stroke-width="5" opacity="0.65">
+    <path d="M84 1000 L210 874"/>
+    <path d="M1725 245 L1805 165"/>
+  </g>
+  <g transform="translate(390 235) scale(0.55)" fill="none" stroke="#ff2d14" stroke-width="42" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M260 220 Q300 120 340 220"/>
+    <path d="M140 320 Q120 300 160 290 L560 290 Q600 290 565 325 L230 650 Q200 680 210 625 L300 360"/>
+    <path d="M410 565 L500 655 Q530 675 520 620 L485 535"/>
+  </g>
+  <text x="820" y="555" font-family="Noto Sans,DejaVu Sans,sans-serif" font-size="118" font-weight="800" font-style="italic" fill="#111111" letter-spacing="-5">HongXingOS</text>
+  <text x="826" y="610" font-family="Noto Sans,DejaVu Sans,sans-serif" font-size="24" font-weight="500" fill="#777777" letter-spacing="3">ARCH LINUX · DEV PREVIEW 7</text>
+</svg>
