@@ -23,7 +23,7 @@ jobs:
             -v "$GITHUB_WORKSPACE:/workspace" \
             -w /workspace \
             archlinux:latest \
-            bash -lc 'pacman -Syu --noconfirm --needed archiso rsync && bash build/build.sh'
+            bash -lc 'pacman -Syu --noconfirm --needed archiso rsync grub && bash build/build.sh'
 
       - name: Show artifacts
         run: ls -lh out/
