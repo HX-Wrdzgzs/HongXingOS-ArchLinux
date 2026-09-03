@@ -6,11 +6,12 @@ HongXingOS Linux 是基于 Arch Linux 技术栈构建的发行版项目。
 
 ## 当前状态
 
-- Arch Linux / archiso 基线
+- Arch Linux / archiso `baseline` 基线
 - KDE Plasma Live Desktop
 - HongXingOS 品牌信息
 - NetworkManager
 - PipeWire
+- VMware `open-vm-tools`
 - Plymouth 启动画面基础
 - GitHub Actions ISO 构建
 
@@ -29,6 +30,19 @@ sudo ./build/build.sh
 out/
 ```
 
+GitHub Actions 也会在 `main` 更新后自动构建 ISO，并上传构建 Artifact。
+
+## VMware Dev Preview
+
+当前 Live 环境用于第一轮调试：
+
+```text
+User: liveuser
+Password: hongxing
+```
+
+SDDM 默认自动登录 `liveuser`，该用户拥有免密码 sudo。该账号只用于 Dev Preview，正式安装镜像会移除固定 Live 密码。
+
 ## 测试目标
 
 第一阶段优先验证 VMware / UEFI：
@@ -38,7 +52,8 @@ out/
 3. NetworkManager 可联网；
 4. `cat /etc/os-release` 显示 HongXingOS；
 5. `pacman -Syu` 正常工作；
-6. Plymouth、SDDM、桌面背景使用一致的 HongXingOS 视觉资产。
+6. VMware 分辨率/鼠标集成正常；
+7. Plymouth、SDDM、桌面背景使用一致的 HongXingOS 视觉资产。
 
 ## 项目定位
 
