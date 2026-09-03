@@ -43,17 +43,33 @@ Password: hongxing
 
 SDDM 默认自动登录 `liveuser`，该用户拥有免密码 sudo。该账号只用于 Dev Preview，正式安装镜像会移除固定 Live 密码。
 
+进入桌面后建议先执行：
+
+```bash
+hxdiag
+```
+
+它会一次输出系统标识、会话类型、SDDM / NetworkManager / VMware Tools 状态、网络、显卡、显示器信息以及本次启动的重要 warning，方便定位 VMware 首轮问题。
+
+如果桌面进不去，也可以切换到 TTY 登录 `liveuser` 后执行：
+
+```bash
+hxdiag | tee ~/hxdiag.txt
+```
+
 ## 测试目标
 
 第一阶段优先验证 VMware / UEFI：
 
 1. ISO 可正常引导；
-2. Live 用户可进入 KDE Plasma；
-3. NetworkManager 可联网；
-4. `cat /etc/os-release` 显示 HongXingOS；
-5. `pacman -Syu` 正常工作；
-6. VMware 分辨率/鼠标集成正常；
-7. Plymouth、SDDM、桌面背景使用一致的 HongXingOS 视觉资产。
+2. Plymouth 是否显示且切换过程正常；
+3. Live 用户是否自动进入 KDE Plasma；
+4. NetworkManager 可联网；
+5. `cat /etc/os-release` 显示 HongXingOS；
+6. `pacman -Syu` 正常工作；
+7. VMware Tools、动态分辨率和鼠标集成正常；
+8. SDDM、桌面背景使用一致的 HongXingOS 视觉资产；
+9. `hxdiag` 中没有影响启动和图形环境的关键错误。
 
 ## 项目定位
 

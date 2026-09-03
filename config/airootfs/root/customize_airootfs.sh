@@ -9,7 +9,7 @@ hwclock --systohc || true
 
 echo 'hongxingos' > /etc/hostname
 
-cat > /etc/os-release <<'OSRELEASE'
+cat > /usr/lib/os-release <<'OSRELEASE'
 NAME="HongXingOS"
 PRETTY_NAME="HongXingOS 7 Dev Preview"
 ID=hongxingos
@@ -23,6 +23,7 @@ SUPPORT_URL="https://github.com/HX-Wrdzgzs/HongXingOS-ArchLinux/issues"
 BUG_REPORT_URL="https://github.com/HX-Wrdzgzs/HongXingOS-ArchLinux/issues"
 LOGO=hongxingos
 OSRELEASE
+ln -sfn ../usr/lib/os-release /etc/os-release
 
 cat > /etc/issue <<'ISSUE'
 HongXingOS 7 Dev Preview \r (\l)
@@ -47,7 +48,7 @@ chmod 0440 /etc/sudoers.d/10-liveuser
 systemctl enable NetworkManager.service
 systemctl enable sddm.service
 systemctl set-default graphical.target
-systemctl enable vmtoolsd.service 2>/dev/null || true
+systemctl enable vmtoolsd.service
 systemctl enable vmware-vmblock-fuse.service 2>/dev/null || true
 
 if command -v plymouth-set-default-theme >/dev/null 2>&1; then
@@ -55,6 +56,7 @@ if command -v plymouth-set-default-theme >/dev/null 2>&1; then
 fi
 
 chmod 0755 /usr/local/bin/hongxingos-set-wallpaper
+chmod 0755 /usr/local/bin/hxdiag
 
 if [[ -d /home/liveuser ]]; then
   cp -aT /etc/skel /home/liveuser

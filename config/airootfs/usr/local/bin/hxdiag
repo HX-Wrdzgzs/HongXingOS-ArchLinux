@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -u
+
+section() {
+  printf '\n===== %s =====\n' "$1"
+}
+
+run_if_exists() {
+  local cmd="$1"
+  shift
+  if command -v "$cmd" >/dev/null 2>&1; then
+    "$cmd" "$@" 2>&1 || true
+  else
+    echo "$cmd: not installed"
+  fi
+}
+
+section "HongXingOS"
+cat /etc/os-release 2>/dev/null || true
+printf 'Kernel: '
+uname -srmo
+printf 'Boot ID: '
+cat /proc/sys/kernel/random/boot_id 2>/dev/null || true
+
+section "Session"
+printf 'XDG_SESSION_TYPE=%s\n' "${XDG_SESSION_TYPE:-unknown}"
+printf 'XDG_CURRENT_DESKTOP=%s\n' "${XDG_CURRENT_DESKTOP:-unknown}"
+printf 'DESKTOP_SESSION=%s\n' "${DESKTOP_SESSION:-unknown}"
+loginctl show-session "${XDG_SESSION_ID:-self}" -p Type -p Class -p State -p Remote 2>/dev/null || true
+
+section "Services"
+for service in NetworkManager.service sddm.service vmtoolsd.service vmware-vmblock-fuse.service; do
+  printf '%-30s enabled=%-10s active=%s\n' \
+    "$service" \
+    "$(systemctl is-enabled "$service" 2>/dev/null || echo n/a)" \
+    "$(systemctl is-active "$service" 2>/dev/null || echo n/a)"
+done
+
+section "Network"
+run_if_exists nmcli general status
+run_if_exists ip -brief address
+
+section "Graphics"
+if command -v lspci >/dev/null 2>&1; then
+  lspci -k 2>/dev/null | grep -EA3 'VGA|3D|Display' || true
+else
+  echo 'lspci: not installed'
+fi
+
+section "VMware"
+run_if_exists vmtoolsd --version
+if [[ -e /sys/class/dmi/id/product_name ]]; then
+  printf 'Product: %s\n' "$(cat /sys/class/dmi/id/product_name)"
+fi
+if [[ -e /sys/class/dmi/id/sys_vendor ]]; then
+  printf 'Vendor: %s\n' "$(cat /sys/class/dmi/id/sys_vendor)"
+fi
+
+section "Display"
+run_if_exists kscreen-doctor -o
+
+section "Boot warnings"
+journalctl -b -p warning..alert --no-pager -n 80 2>/dev/null || true
+
+printf '\n===== End =====\n'

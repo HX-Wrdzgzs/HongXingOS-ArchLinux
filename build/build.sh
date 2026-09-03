@@ -28,6 +28,13 @@ if [[ ! -d "$SOURCE_PROFILE" ]]; then
   exit 1
 fi
 
+for package in open-vm-tools plasma-meta plymouth sddm networkmanager; do
+  if ! grep -qx "$package" "$CONFIG_DIR/packages.x86_64.extra"; then
+    echo "[ERR] Dev Preview 必需包缺失: $package"
+    exit 1
+  fi
+done
+
 rm -rf "$ROOT_DIR/work" "$OUT_DIR"
 mkdir -p "$PROFILE_DIR" "$OUT_DIR"
 cp -a "$SOURCE_PROFILE/." "$PROFILE_DIR/"
@@ -75,6 +82,7 @@ fi
 
 chmod +x "$PROFILE_DIR/airootfs/root/customize_airootfs.sh"
 chmod +x "$PROFILE_DIR/airootfs/usr/local/bin/hongxingos-set-wallpaper"
+chmod +x "$PROFILE_DIR/airootfs/usr/local/bin/hxdiag"
 
 echo "[INFO] Base profile : $BASE_PROFILE"
 echo "[INFO] Profile      : $PROFILE_DIR"
@@ -84,7 +92,7 @@ echo "[INFO] Building HongXingOS 7 Dev Preview..."
 mkarchiso -v -r -w "$ARCHISO_WORK_DIR" -o "$OUT_DIR" "$PROFILE_DIR"
 
 if compgen -G "$OUT_DIR/*.iso" >/dev/null; then
-  (cd "$OUT_DIR" && sha256sum ./*.iso > SHA256SUMS)
+  (cd "$OUT_DIR" && sha256sum ./*.iso > SHA256SUMS && sha256sum -c SHA256SUMS)
   echo "[OK] ISO build complete."
   ls -lh "$OUT_DIR"/*.iso "$OUT_DIR/SHA256SUMS"
 else
