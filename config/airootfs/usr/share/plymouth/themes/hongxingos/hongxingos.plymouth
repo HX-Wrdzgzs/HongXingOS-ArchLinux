@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=HongXingOS
+Description=HongXingOS boot splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/hongxingos
+ScriptFile=/usr/share/plymouth/themes/hongxingos/hongxingos.script
