@@ -1,0 +1,40 @@
+name: Build HongXingOS ISO
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build in Arch Linux container
+        run: |
+          docker run --rm --privileged \
+            -v "$GITHUB_WORKSPACE:/workspace" \
+            -w /workspace \
+            archlinux:latest \
+            bash -lc 'pacman -Syu --noconfirm --needed archiso rsync && bash build/build.sh'
+
+      - name: Show artifacts
+        run: ls -lh out/
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: HongXingOS-7-DevPreview-x86_64
+          path: |
+            out/*.iso
+            out/SHA256SUMS
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
