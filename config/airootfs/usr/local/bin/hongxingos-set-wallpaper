@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MARKER="$HOME/.config/hongxingos-wallpaper-applied"
+WALLPAPER="/usr/share/wallpapers/HongXingOS-Light/contents/images/1920x1080.svg"
+
+[[ -e "$MARKER" ]] && exit 0
+mkdir -p "$(dirname "$MARKER")"
+
+if command -v plasma-apply-wallpaperimage >/dev/null 2>&1; then
+  plasma-apply-wallpaperimage "$WALLPAPER" || true
+fi
+
+touch "$MARKER"
